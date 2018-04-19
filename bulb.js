@@ -1,4 +1,4 @@
-'use strict';
+//'use strict';
 
 let ledCharacteristic = null;
 let poweredOn = false;
@@ -84,13 +84,13 @@ function toggleButtons() {
 }
 
 function setColor(red, green, blue, white) {
-    let data = new Uint8Array([0x10, green, 0x01, 0x00, 0x10, blue, 0x10, red, 0x10, white]);
+    let data = new Uint8Array([0x01, green, 0x01, 0x00, 0x01, blue, 0x01, red, 0x01, white]);
     return ledCharacteristic.writeValue(data)
         .catch(err => console.log('Error when writing value! ', err));
 }
 
 function red() {
-    return setColor(255, 0, 0)
+    return setColor(255, 0, 0, 0)
         .then(() => console.log('Color set to Red'));
 }
 
