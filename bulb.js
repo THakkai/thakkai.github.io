@@ -49,7 +49,7 @@ function connect() {
 }
 
 function powerOn() {
-  let data = new Uint8Array([0xFF, 0x01, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00]);
+  let data = new Uint8Array([0x01, 0xFF, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00]);
   return ledCharacteristic.writeValue(data)
       .catch(err => console.log('Error when powering on! ', err))
       .then(() => {
@@ -59,7 +59,7 @@ function powerOn() {
 }
 
 function powerOff() {
-  let data = new Uint8Array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+  let data = new Uint8Array([0x01, 0xFF, 0x01, 0x00, 0x01, 0x00, 0x01, 0xFF, 0x01, 0x00]);
   return ledCharacteristic.writeValue(data)
       .catch(err => console.log('Error when switching off! ', err))
       .then(() => {
