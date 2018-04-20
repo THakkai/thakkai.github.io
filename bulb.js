@@ -1,4 +1,4 @@
-//'use strict';
+'use strict';
 
 let ledCharacteristic = null;
 let poweredOn = false;
@@ -31,11 +31,11 @@ function connect() {
             return device.gatt.connect();
         })
         .then(server => {
-            console.log('Getting Service 0xffe5 - Light control...');
+            console.log('Getting Service 0xcc02 - Light control...');
             return server.getPrimaryService('0000cc02-0000-1000-8000-00805f9b34fb');
         })
         .then(service => {
-            console.log('Getting Characteristic 0xffe9 - Light control...');
+            console.log('Getting Characteristic 0xee03 - Light control...');
             return service.getCharacteristic('0000ee03-0000-1000-8000-00805f9b34fb');
         })
         .then(characteristic => {
@@ -49,7 +49,7 @@ function connect() {
 }
 
 function powerOn() {
-  let data = new Uint8Array([0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0xFF]);
+  let data = new Uint16Array([0x0000, 0x0100, 0x0000, 0x0000, 0x01FF]);
   return ledCharacteristic.writeValue(data)
       .catch(err => console.log('Error when powering on! ', err))
       .then(() => {
@@ -59,7 +59,7 @@ function powerOn() {
 }
 
 function powerOff() {
-  let data = new Uint8Array([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]);
+  let data = new Uint16Array([0x0000, 0x0000, 0x0000, 0x00, 0x0000]);
   return ledCharacteristic.writeValue(data)
       .catch(err => console.log('Error when switching off! ', err))
       .then(() => {
@@ -84,23 +84,23 @@ function toggleButtons() {
 }
 
 function setColor(red, green, blue, white) {
-    let data = new Uint8Array([0x01, green, 0x01, 0x00, 0x01, blue, 0x01, red, 0x01, white]);
+    let data = new Uint16Array([green, 0x0100, blue, red, white]);
     return ledCharacteristic.writeValue(data)
         .catch(err => console.log('Error when writing value! ', err));
 }
 
 function red() {
-    return setColor(255, 0, 0, 0)
+    return setColor(511, 0, 0, 0)
         .then(() => console.log('Color set to Red'));
 }
 
 function green() {
-    return setColor(0, 255, 0, 0)
+    return setColor(0, 511, 0, 0)
         .then(() => console.log('Color set to Green'));
 }
 
 function blue() {
-    return setColor(0, 0, 255, 0)
+    return setColor(0, 0, 511, 0)
         .then(() => console.log('Color set to Blue'));
 }
 
