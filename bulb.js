@@ -91,17 +91,17 @@ function setColor(red, green, blue, white) {
 }
 
 function red() {
-    return setColor(255, 0, 0, 0)
+    return setColor(0xFF, 0x0, 0x0, 0x0)
         .then(() => console.log('Color set to Red'));
 }
 
 function green() {
-    return setColor(0, 255, 0, 0)
+    return setColor(0x0, 0xFF, 0x0, 0x0)
         .then(() => console.log('Color set to Green'));
 }
 
 function blue() {
-    return setColor(0, 0, 255, 0)
+    return setColor(0x0, 0x0, 0xFF, 0x0)
         .then(() => console.log('Color set to Blue'));
 }
 
@@ -114,12 +114,12 @@ annyang.addCommands({
     'red': red,
     'green': green,
     'blue': blue,
-    'yellow': () => setColor(127, 127, 0),
-    'orange': () => setColor(127, 35, 0),
-    'purple': () => setColor(127, 0, 127),
-    'pink': () => setColor(180, 12, 44),
-    'cyan': () => setColor(0, 127, 127),
-    'white': () => setColor(127, 127, 127),
+    'yellow': () => setColor(127, 127, 0, 0),
+    'orange': () => setColor(127, 35, 0, 0),
+    'purple': () => setColor(127, 0, 127, 0),
+    'pink': () => setColor(180, 12, 44, 0),
+    'cyan': () => setColor(0, 127, 127, 0),
+    'white': () => setColor(127, 127, 127, 0),
     'turn on': powerOn,
     'turn off': powerOff
 });
