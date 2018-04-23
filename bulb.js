@@ -140,7 +140,7 @@ annyang.addCommands({
     'cyan': () => setColor(0, 127, 127, 0),
     'blanc': () => setColor(127, 127, 127, 0),
     'allumer': powerOn,
-    'eteindre': powerOff
+    'eteindre': powerOff,
 	'mode nuit': sleep
 });
 
