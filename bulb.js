@@ -49,7 +49,7 @@ function connect() {
 }
 
 function powerOn() {
-  let data = new Uint8Array([0x01FF]);
+  let data = new Uint8Array([0x01, 0xFF, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00]);
   return ledCharacteristic.writeValue(data)
       .catch(err => console.log('Error when powering on! ', err))
       .then(() => {
@@ -59,7 +59,7 @@ function powerOn() {
 }
 
 function powerOff() {
-  let data = new Uint8Array([0xFF01]);
+  let data = new Uint8Array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
   return ledCharacteristic.writeValue(data)
       .catch(err => console.log('Error when switching off! ', err))
       .then(() => {
@@ -105,23 +105,41 @@ function blue() {
         .then(() => console.log('Color set to Blue'));
 }
 
+sleep_counter = 255; // max color
+time = 10000; // 10s
+increment = 15; // color decrement
+
+function sleep() {
+	setTimeout( function() {
+		i=i-increment;
+		if  (i > 1) {
+			setColor(i, 0, 0, 0);
+			sleep()
+		}
+	}, time);
+	powerOff();
+	sleep_counter = 255; //reset counter
+}
+
 function listen() {
     annyang.start({ continuous: true });
+	annyang.setLanguage('fr-FR');
 }
 
 // Voice commands
 annyang.addCommands({
-    'red': red,
-    'green': green,
-    'blue': blue,
-    'yellow': () => setColor(127, 127, 0, 0),
+    'rouge': red,
+    'vert': green,
+    'bleu': blue,
+    'jaune': () => setColor(127, 127, 0, 0),
     'orange': () => setColor(127, 35, 0, 0),
-    'purple': () => setColor(127, 0, 127, 0),
-    'pink': () => setColor(180, 12, 44, 0),
+    'violet': () => setColor(127, 0, 127, 0),
+    'rose': () => setColor(180, 12, 44, 0),
     'cyan': () => setColor(0, 127, 127, 0),
-    'white': () => setColor(127, 127, 127, 0),
-    'turn on': powerOn,
-    'turn off': powerOff
+    'blanc': () => setColor(127, 127, 127, 0),
+    'allumer': powerOn,
+    'eteindre': powerOff
+	'mode nuit': sleep
 });
 
 // Install service worker - for offline support
