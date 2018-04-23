@@ -105,20 +105,22 @@ function blue() {
         .then(() => console.log('Color set to Blue'));
 }
 
-sleep_counter = 255; // max color
-time = 10000; // 10s
-increment = 15; // color decrement
+var sleep_counter = 255; // max color
+var time = 10000; // 10s
+var increment = 15; // color decrement sleep_counter/increment=number of step
 
-function sleep() {
+function nightmode() {
 	setTimeout( function() {
 		i=i-increment;
 		if  (i > 1) {
 			setColor(i, 0, 0, 0);
-			sleep()
+			nightmode();
+		}
+		else {
+			powerOff();
+			sleep_counter = 255; //reset counter
 		}
 	}, time);
-	powerOff();
-	sleep_counter = 255; //reset counter
 }
 
 function listen() {
@@ -141,6 +143,18 @@ annyang.addCommands({
     'eteindre': powerOff
 	'mode nuit': sleep
 });
+
+// API Call GET
+function $_GET(q,s) { 
+        s = s ? s : window.location.search; 
+        var re = new RegExp('&'+q+'(?:=([^&]*))?(?=&|$)','i'); 
+        return (s=s.replace(/^?/,'&').match(re)) ? (typeof s[1] == 'undefined' ? '' : decodeURIComponent(s[1])) : undefined; 
+}
+
+var night_mode = $_GET('nightmode');
+if (night_mode) {
+	nightmode();
+}
 
 // Install service worker - for offline support
 if ('serviceWorker' in navigator) {
