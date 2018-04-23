@@ -111,9 +111,9 @@ var increment = 15; // color decrement sleep_counter/increment=number of step
 
 function nightmode() {
 	setTimeout( function() {
-		i=i-increment;
-		if  (i > 1) {
-			setColor(i, 0, 0, 0);
+		sleep_counter = sleep_counter-increment;
+		if  (sleep_counter > 1) {
+			setColor(sleep_counter, 0, 0, 0);
 			nightmode();
 		}
 		else {
