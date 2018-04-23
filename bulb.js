@@ -145,10 +145,19 @@ annyang.addCommands({
 });
 
 // API Call GET
-function $_GET(q,s) { 
-        s = s ? s : window.location.search; 
-        var re = new RegExp('&'+q+'(?:=([^&]*))?(?=&|$)','i'); 
-        return (s=s.replace(/^?/,'&').match(re)) ? (typeof s[1] == 'undefined' ? '' : decodeURIComponent(s[1])) : undefined; 
+function $_GET(param) {
+	var vars = {};
+	window.location.href.replace( location.hash, '' ).replace( 
+		/[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
+		function( m, key, value ) { // callback
+			vars[key] = value !== undefined ? value : '';
+		}
+	);
+
+	if ( param ) {
+		return vars[param] ? vars[param] : null;	
+	}
+	return vars;
 }
 
 var night_mode = $_GET('nightmode');
