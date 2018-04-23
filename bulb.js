@@ -141,7 +141,7 @@ annyang.addCommands({
     'blanc': () => setColor(127, 127, 127, 0),
     'allumer': powerOn,
     'eteindre': powerOff,
-	'mode nuit': sleep
+	'mode nuit': nightmode
 });
 
 // API Call GET
