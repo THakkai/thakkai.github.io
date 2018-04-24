@@ -37,7 +37,7 @@
 /* eslint-disable indent, no-unused-vars, no-multiple-empty-lines, max-nested-callbacks, space-before-function-paren, quotes, comma-spacing */
 'use strict';
 
-var precacheConfig = [["bulb.js","908d7426e7a26f671eb7ef012ba1e5b2"],["images/icon.png","a7660976e7655e24886e14794044836d"],["index.html","b183b00bd18d5db1ae18e0d7d73f002a"],["manifest.json","e53794a2d8da30fa8c85eb0f64a62d4a"],["styles.css","33f7b1ea5264bc808629a9759b91f418"]];
+var precacheConfig = [["bulb.js","f326d156f8509716daae1766786a17b2"],["images/icon.png","a7660976e7655e24886e14794044836d"],["index.html","9c476feeb60a06de1667f6fe130bf8f9"],["manifest.json","42d8f0d98798d0a6c6002b3afd374746"],["styles.css","f8617f58c2d2eb32603c614b9647e98c"]];
 var cacheName = 'sw-precache-v2-web-lightbulb-' + (self.registration ? self.registration.scope : '');
 
 
@@ -253,6 +253,7 @@ self.addEventListener('fetch', function(event) {
 // Runtime cache configuration, using the sw-toolbox library.
 
 toolbox.router.get(/^https:\/\//, toolbox.networkFirst, {});
+
 
 
 

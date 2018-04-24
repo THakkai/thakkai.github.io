@@ -113,6 +113,7 @@ function nightmode() {
 	setTimeout( function() {
 		sleep_counter = sleep_counter-increment;
 		if  (sleep_counter > 1) {
+			console.log('nightmode dim status: ' + sleep_counter);
 			setColor(sleep_counter, 0, 0, 0);
 			nightmode();
 		}
@@ -144,7 +145,7 @@ annyang.addCommands({
 	'mode nuit': nightmode
 });
 
-// API Call GET
+// API Call GET -- NOT WORKING AS INTENDED BECAUSE IT NEEDS USER INTERACTION
 function $_GET(param) {
 	var vars = {};
 	window.location.href.replace( location.hash, '' ).replace( 
