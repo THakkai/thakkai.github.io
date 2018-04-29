@@ -2,9 +2,71 @@
 
 let ledCharacteristic = null;
 let poweredOn = false;
+let turnedOn = false;
+let colorWheel = null;
+let oldColor = null;
+let mouseIsDown = false;
+
+colorWheel = iro.ColorWheel("#color-wheel", {
+	width: 320,
+	height: 320,
+	padding: 4,
+	sliderMargin: 24,
+	markerRadius: 8,
+	color: "rgb(255, 255, 255)",
+	styles: {
+		".on-off": {
+			"background-color": "rgb"
+		},
+		".on-off:hover": {
+			"background-color": "rgb"
+		}
+	}
+});
+
+document.querySelector('.wheel').addEventListener('mousedown', function (e) {
+	handleMouseDown(e);
+}, false);
+document.querySelector('.wheel').addEventListener('mousemove', function (e) {
+	handleMouseMove(e);
+}, false);
+document.querySelector('.wheel').addEventListener('mouseup', function (e) {
+	handleMouseUp(e);
+}, false);
+
+function handleMouseDown(e) {
+
+	// mousedown stuff here
+	mouseIsDown = true;
+}
+
+function handleMouseUp(e) {
+	updateColor();
+
+	// mouseup stuff here
+	mouseIsDown = false;
+}
+
+function handleMouseMove(e) {
+	if (!mouseIsDown) {
+		return;
+	}
+
+	updateColor();
+}
+
+function updateColor() {
+	if (oldColor != null && oldColor != "" && oldColor != colorWheel.color.rgbString) {
+		setColor(colorWheel.color.rgb.r, colorWheel.color.rgb.g, colorWheel.color.rgb.b);
+	}
+
+	oldColor = colorWheel.color.rgbString;
+}
 
 function onConnected() {
     document.querySelector('.connect-button').classList.add('hidden');
+ 	document.querySelector('.connect-another').classList.remove('hidden');
+	document.querySelector('.wheel').classList.remove('hidden');
     document.querySelector('.color-buttons').classList.remove('hidden');
     document.querySelector('.mic-button').classList.remove('hidden');
     document.querySelector('.power-button').classList.remove('hidden');
@@ -81,6 +143,7 @@ function toggleButtons() {
       colorButton.disabled = !poweredOn;
     });
     document.querySelector('.mic-button button').disabled = !poweredOn;
+	poweredOn ? document.querySelector('.wheel').classList.remove('hidden') : document.querySelector('.wheel').classList.add('hidden');
 }
 
 function setColor(red, green, blue, white) {
@@ -105,21 +168,31 @@ function blue() {
         .then(() => console.log('Color set to Blue'));
 }
 
-var sleep_counter = 255; // max color
-var time = 10000; // 10s
+var time = 100000; // 100s
 var increment = 15; // color decrement sleep_counter/increment=number of step
+var r = 255;
+var g,b,w = 0;
 
-function nightmode() {
+function nightmode(r,g,b,w) {
 	setTimeout( function() {
 		sleep_counter = sleep_counter-increment;
 		if  (sleep_counter > 1) {
 			console.log('nightmode dim status: ' + sleep_counter);
-			setColor(sleep_counter, 0, 0, 0);
-			nightmode();
+			setColor(r, g, b, w);
+			r = r - increment;
+			g = g - increment;
+			b = b - increment;
+			w = w - increment;
+			
+			if(r<1) r=0;
+			if(g<1) g=0;
+			if(b<1) b=0;
+			if(w<1) w=0;
+			
+			nightmode(r, g, b, w);
 		}
 		else {
 			powerOff();
-			sleep_counter = 255; //reset counter
 		}
 	}, time);
 }

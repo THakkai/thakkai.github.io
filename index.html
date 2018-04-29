@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Magic Blue</title>
+    <title>Web Lightbulb</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -12,6 +12,7 @@
 	<link rel="manifest" href="manifest.json" />
 
     <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+	<script src="iro.min.js"></script>
 </head>
 
 <body>
@@ -32,6 +33,8 @@
                 </button>
             </div>
 
+			<div class="wheel hidden" id="color-wheel"></div>
+			
             <div class="color-buttons hidden">
                 <button onclick="red()" class="mdl-button mdl-js-button mdl-button--fab mdl-button--raised mdl-js-ripple-effect" style="background:#ffa0a0">
                     R
